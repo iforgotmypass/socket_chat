@@ -10,4 +10,4 @@ client = App()
 client.connect(IP, PORT)
 
 # STARTING RECEIVING AND SENDING MESSAGES
-client.incomingMessagesHandler()
+client.clientConnectionHandler()

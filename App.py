@@ -27,7 +27,6 @@ class App():
 
     def send(self, msg):
         self.cs.send(bytes(msg, 'utf-8'))
-        print('sent')
 
     def sendServer(self, client, msg):
         client.send(bytes(msg, 'utf-8'))
@@ -78,10 +77,10 @@ class App():
                 print("Error!")
                 break
 
-
     def clientConnectionHandler(self):
         Thread(target=self.incomingMessagesHandler).start()
         Thread(target=self.sendingMessagesHandler).start()
+
 
     def incomingMessagesHandler(self):
         while True:
@@ -94,7 +93,7 @@ class App():
 
     def sendingMessagesHandler(self):
         while True:
-            messageToSend = input("Message: ")
+            messageToSend = input("")
             self.send(messageToSend)
             stdout.write("\033[F")
             self.printmsg(messageToSend)
