@@ -1,13 +1,13 @@
-from clientApp import *
+from App import *
+from threading import Thread
 
 # DEFINE IP AND PORT OF YOUR SERVER
-IP = ''
-PORT =
+IP = '192.168.0.150'
+PORT = 2137
 
 # CONNECTING TO SERVER
-client = clientApp()
+client = App()
 client.connect(IP, PORT)
-print(f'[{client.getTime()}] Connected: {IP}:{PORT}')
 
 # STARTING RECEIVING AND SENDING MESSAGES
-client.connectionHandler()
+client.incomingMessagesHandler()
