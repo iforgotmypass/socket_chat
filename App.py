@@ -95,10 +95,14 @@ class App():
 
     def sendingMessagesHandler(self):
         while True:
-            messageToSend = input("")
-            self.send(messageToSend)
-            stdout.write("\033[F")
-            self.printmsg(messageToSend)
+            messageToSend = input("Message: ")
             if messageToSend == '/quit':
                 self.printmsg('Disconnected.')
                 break
+            elif messageToSend == '':
+                stdout.write("\033[F")
+                stdout.write('\rMessage cannot be empty.\n')
+                print("\033[<10>C")
+            self.send(messageToSend)
+            stdout.write("\033[F")
+            self.printmsg(messageToSend)
