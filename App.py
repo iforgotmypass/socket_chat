@@ -58,7 +58,6 @@ class App():
 
     def clientHandler(self, client):
         nickname = client.recv(20).decode('utf-8')
-        print(nickname)
         self.sendServer(client, f"You've joined the chat, {nickname}")
         self.printmsgServer(f"{nickname} joined the chat")
         self.sendToAll(f'[{self.getTime()}] SERVER: {nickname} joined the chat.')
@@ -69,12 +68,15 @@ class App():
                 message = client.recv(50)
                 if message == '/quit':
                     client.close()
+                    self.sendToAll(f'[{self.getTime()}] {nickname} disconnected. (error)')
                     del self.clients[client]
                     break
                 self.printmsgServer(message.decode('utf-8'), nickname)
                 self.sendToAll(f'[{self.getTime()}] {nickname}: {message.decode("utf-8")}')
-            except:
-                print("Error!")
+            except socket.error:
+                del self.clients[client]
+                self.printmsgServer(f'{nickname} disconnected. (error)')
+                self.sendToAll(f'[{self.getTime()}] {nickname} disconnected. (error)')
                 break
 
     def clientConnectionHandler(self):
@@ -98,5 +100,5 @@ class App():
             stdout.write("\033[F")
             self.printmsg(messageToSend)
             if messageToSend == '/quit':
-                print(f'[{self.getTime()}] Disconnected.')
+                self.printmsg('Disconnected.')
                 break
